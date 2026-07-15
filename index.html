@@ -280,40 +280,87 @@ header{
 .twist{background:rgba(255,250,245,.76);border-left:4px solid var(--clay);padding:12px 13px;border-radius:12px}
 .twist b{display:block;font-size:.72rem;margin-bottom:4px}
 .twist p{margin:0;color:var(--muted);font-size:.67rem;line-height:1.5}
-@media (max-width: 768px) {
+@media (max-width: 850px) {
   .game {
-    min-height: 1500px;
+    min-height: 760px;
   }
 
   .map,
   .player,
   .story-bubble {
-    display: none;
+    display: block;
   }
 
   .level {
-    position: absolute;
-    left: 50% !important;
-    width: 84%;
+    width: 94px;
+    padding: 6px 6px 7px;
   }
 
-  .n1 { top: 6%; }
-  .n2 { top: 16%; }
-  .n3 { top: 26%; }
-  .n4 { top: 36%; }
-  .n5 { top: 46%; }
-  .n6 { top: 56%; }
-  .n7 { top: 66%; }
-  .n8 { top: 76%; }
-  .n9 { top: 86%; }
-  .n10 { top: 96%; }
-
-  .project-modal .flip-wrap {
-    width: 94vw;
-    height: 88vh;
+  .level .icon {
+    font-size: 1.1rem;
+    height: 22px;
   }
 
-  .case-grid {
+  .level .num {
+    font-size: .5rem;
+  }
+
+  .level .title {
+    font-size: .66rem;
+  }
+
+  .level .sub {
+    font-size: .54rem;
+  }
+
+  .player {
+    width: 38px;
+    height: 38px;
+    font-size: 1.1rem;
+  }
+
+  .story-bubble {
+    width: min(290px, 78vw);
+  }
+
+  .bottom-hud {
+    width: calc(100% - 30px);
+    bottom: 65px;
+  }
+
+  .quest-btn {
+    left: 15px;
+    right: 15px;
+    text-align: center;
+  }
+
+  .progress-wrap {
+    min-width: 130px;
+  }
+
+  .progress-label {
+    display: none;
+  }
+
+  .hero-inner {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .hero-copy {
+    text-align: center;
+  }
+
+  .hero-copy .actions {
+    justify-content: center;
+  }
+
+  .hero-photo-wrap {
+    width: 135px;
+    height: 135px;
+  }
+
+  .project-grid {
     grid-template-columns: 1fr;
   }
 
@@ -324,6 +371,15 @@ header{
   .project-section-head p {
     text-align: left;
     margin-top: 5px;
+  }
+
+  .project-modal .flip-wrap {
+    width: 94vw;
+    height: 88vh;
+  }
+
+  .case-grid {
+    grid-template-columns: 1fr;
   }
 
   .project-buttons {
@@ -350,6 +406,12 @@ header{
 }
 
 @media(max-width:650px){
+ .game{min-height:680px}
+ .map,.player,.story-bubble{display:block}
+ .level{width:84px}
+ .story-bubble{width:min(255px,82vw)}
+ .bottom-hud{width:calc(100% - 22px);left:11px;bottom:60px}
+ .quest-btn{left:11px;right:11px}
  .case-grid{grid-template-columns:1fr}
  .flip-wrap{height:88vh}
  .project-section-head{display:block}
@@ -357,19 +419,6 @@ header{
  .project-section{padding:14px;margin:20px 0}
  .project-button strong{font-size:.82rem!important}
  .project-button span{font-size:.62rem!important}
-}
-
-@media(max-width:850px){
- .game{min-height:1450px}.map,.player,.story-bubble{display:none}.level{left:50%!important;width:78%}
- .n1{top:6%}.n2{top:16%}.n3{top:26%}.n4{top:36%}.n5{top:46%}.n6{top:56%}.n7{top:66%}.n8{top:76%}.n9{top:86%}.n10{top:96%}
- .bottom-hud{width:calc(100% - 30px);bottom:65px}.quest-btn{left:15px;right:15px;text-align:center}
- .progress-wrap{min-width:130px}.progress-label{display:none}
- .hero-inner{grid-template-columns:1fr;text-align:center}
- .hero-copy{text-align:center}.hero-copy .actions{justify-content:center}
- .hero-photo-wrap{width:135px;height:135px}
- .project-grid{grid-template-columns:1fr}
- .project-section-head{display:block}
- .project-section-head p{text-align:left;margin-top:5px}
 }
 
 /* Project-specific flashcard themes */
