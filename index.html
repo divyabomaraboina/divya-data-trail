@@ -251,15 +251,42 @@ header{
  backdrop-filter:blur(10px);place-items:center;padding:22px
 }
 .project-modal.open{display:grid}
-.flip-wrap{width:min(740px,95vw);height:min(585px,86vh);perspective:1600px}
-.flip-card{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.2,.75,.2,1)}
-.flip-card.flipped{transform:rotateY(180deg)}
-.flip-face{
- position:absolute;inset:0;backface-visibility:hidden;border-radius:25px;
- background:linear-gradient(160deg,#fffaf5,#eee3d8);border:1px solid rgba(48,42,38,.12);
- box-shadow:0 24px 65px rgba(72,55,44,.27);padding:24px;overflow:auto
+.flip-wrap{
+ width:min(740px,95vw);
+ height:min(585px,86vh);
+ perspective:1600px;
+ -webkit-perspective:1600px;
 }
-.flip-back{transform:rotateY(180deg);background:linear-gradient(160deg,#f8f1ea,#ddd3c9)}
+.flip-card{
+ position:relative;
+ width:100%;
+ height:100%;
+ transform-style:preserve-3d;
+ -webkit-transform-style:preserve-3d;
+ transition:transform .75s cubic-bezier(.2,.75,.2,1);
+}
+.flip-card.flipped{
+ transform:rotateY(180deg);
+ -webkit-transform:rotateY(180deg);
+}
+.flip-face{
+ position:absolute;
+ inset:0;
+ backface-visibility:hidden;
+ -webkit-backface-visibility:hidden;
+ border-radius:25px;
+ background:linear-gradient(160deg,#fffaf5,#eee3d8);
+ border:1px solid rgba(48,42,38,.12);
+ box-shadow:0 24px 65px rgba(72,55,44,.27);
+ padding:24px;
+ overflow:auto;
+ -webkit-overflow-scrolling:touch;
+}
+.flip-back{
+ transform:rotateY(180deg);
+ -webkit-transform:rotateY(180deg);
+ background:linear-gradient(160deg,#f8f1ea,#ddd3c9);
+}
 .flip-close{position:absolute;right:16px;top:12px;border:0;background:transparent;color:var(--ink);font-size:1.4rem;cursor:pointer;z-index:3}
 .flip-kicker{font-size:.61rem;letter-spacing:.13em;text-transform:uppercase;font-weight:900;color:var(--clay)}
 .flip-title{display:flex;align-items:center;gap:12px;margin:9px 0 16px}
@@ -365,6 +392,30 @@ header{
  .project-grid{grid-template-columns:1fr}
  .project-section-head{display:block}
  .project-section-head p{text-align:left;margin-top:5px}
+}
+
+
+@media(max-width:768px){
+ .flip-wrap{
+   width:94vw;
+   height:88vh;
+ }
+
+ .flip-face{
+   padding:18px;
+ }
+
+ .flip-card.flipped .flip-front{
+   visibility:hidden;
+ }
+
+ .flip-card:not(.flipped) .flip-back{
+   visibility:hidden;
+ }
+
+ .flip-card.flipped .flip-back{
+   visibility:visible;
+ }
 }
 
 /* Project-specific flashcard themes */
@@ -924,6 +975,5 @@ if(gameArea){
 
 refresh();
 </script>
-<!-- GitHub Pages refresh -->
 </body>
 </html>
