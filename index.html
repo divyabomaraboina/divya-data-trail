@@ -956,6 +956,130 @@ header{
   }
 }
 
+
+/* MOBILE CINEMATIC JOURNEY OVERRIDE */
+@media(max-width:850px){
+  .game{
+    isolation:isolate;
+  }
+
+  .map{
+    transform-origin:center center;
+    transition:
+      transform 1.15s cubic-bezier(.22,.8,.22,1),
+      filter .7s ease;
+    will-change:transform;
+  }
+
+  .player{
+    transition:
+      left 1.15s cubic-bezier(.22,.8,.22,1),
+      top 1.15s cubic-bezier(.22,.8,.22,1),
+      transform .55s ease,
+      box-shadow .55s ease;
+    will-change:left,top,transform;
+  }
+
+  .game.is-travelling .player{
+    transform:translate(-50%,-50%) scale(1.18) rotate(-4deg);
+    box-shadow:
+      0 0 0 13px rgba(241,195,143,.16),
+      0 20px 38px rgba(72,55,44,.28);
+  }
+
+  .game.is-travelling .map{
+    filter:saturate(1.08) contrast(1.03);
+  }
+
+  .path{
+    transition:stroke .7s ease,stroke-width .7s ease,filter .7s ease;
+  }
+
+  .game.is-travelling .path{
+    stroke:#f3a65a;
+    stroke-width:7;
+    filter:drop-shadow(0 0 8px rgba(243,166,90,.65));
+    animation:pathTravelPulse 1.05s linear infinite;
+  }
+
+  .game.journey-complete .path{
+    stroke:#7fbf73;
+    stroke-width:6;
+    filter:drop-shadow(0 0 7px rgba(127,191,115,.45));
+  }
+
+  @keyframes pathTravelPulse{
+    to{stroke-dashoffset:-40}
+  }
+
+  /* Allow the actual player coordinates to animate instead of pinning it */
+  .game:not(.journey-complete) .player{
+    left:var(--mobile-player-x,50%)!important;
+    top:var(--mobile-player-y,43%)!important;
+  }
+
+  /* Keep the active card near the destination but not under the modal */
+  .game:not(.journey-complete) .level.active{
+    left:var(--mobile-level-x,50%)!important;
+    top:var(--mobile-level-y,43%)!important;
+  }
+
+  .game:not(.journey-complete) .level.preview{
+    left:var(--mobile-preview-x,75%)!important;
+    top:var(--mobile-preview-y,68%)!important;
+  }
+
+  /* Center skill/story card as a modal */
+  .story-bubble{
+    position:fixed;
+    left:50%!important;
+    right:auto!important;
+    top:50%!important;
+    bottom:auto!important;
+    width:min(88vw,390px);
+    max-width:390px;
+    max-height:72vh;
+    transform:translate(-50%,-46%) scale(.88)!important;
+    opacity:0;
+    border-radius:24px;
+    z-index:260;
+    box-shadow:0 30px 90px rgba(48,42,38,.42);
+    transition:
+      opacity .42s ease,
+      transform .58s cubic-bezier(.16,.84,.28,1);
+  }
+
+  .story-bubble.show{
+    transform:translate(-50%,-50%) scale(1)!important;
+    opacity:1;
+  }
+
+  .story-bubble.hide{
+    transform:translate(-50%,-44%) scale(.86)!important;
+    opacity:0;
+  }
+
+  .game.story-open::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    z-index:240;
+    background:rgba(38,31,27,.38);
+    backdrop-filter:blur(4px);
+    -webkit-backdrop-filter:blur(4px);
+    pointer-events:none;
+  }
+
+  .game.story-open::after{
+    display:none;
+  }
+
+  .story-bubble .complete-level-btn{
+    position:sticky;
+    bottom:0;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -981,7 +1105,7 @@ header{
 </section>
 
 <main class="game-shell">
- <div class="game-title"><div class="eyebrow">Career map</div><h2>Divya's Data Trail</h2><p>Each stop opens above the traveler. Mysuru and Chennai mark my Infosys relocations.</p></div>
+ <div class="game-title"><div class="eyebrow">Career map</div><h2>Divya's Data Trail</h2><p>Tap Start Journey, complete each level, and follow the highlighted path. The next stop stays blurred until you unlock it.</p></div>
  <section class="game" id="game">
   <div class="hud"><b id="hudLevel">LEVEL 1 / 10</b><span id="hudText">Hyderabad · Electronics & VLSI</span></div>
   <svg class="map" viewBox="0 0 1400 900" preserveAspectRatio="none">
@@ -1227,6 +1351,45 @@ function applyTheme(i){
  document.getElementById("game").style.background=`linear-gradient(145deg,${t[1]},${t[2]}88)`;
 }
 
+
+function setMobileJourneyPosition(index){
+  const level=levels[index];
+  const next=levels[Math.min(index+1,levels.length-1)];
+
+  document.documentElement.style.setProperty("--mobile-player-x",level.x+"%");
+  document.documentElement.style.setProperty("--mobile-player-y",level.y+"%");
+  document.documentElement.style.setProperty("--mobile-level-x",level.x+"%");
+  document.documentElement.style.setProperty("--mobile-level-y",level.y+"%");
+  document.documentElement.style.setProperty("--mobile-preview-x",next.x+"%");
+  document.documentElement.style.setProperty("--mobile-preview-y",next.y+"%");
+}
+
+function animateJourneyTo(index,openAfter=true){
+  const game=document.getElementById("game");
+  const level=levels[index];
+
+  game.classList.add("is-travelling");
+  setStoryOpen(false);
+
+  player.style.left=level.x+"%";
+  player.style.top=level.y+"%";
+
+  document.documentElement.style.setProperty("--mobile-player-x",level.x+"%");
+  document.documentElement.style.setProperty("--mobile-player-y",level.y+"%");
+
+  setTimeout(()=>{
+    current=index;
+    refresh();
+  },120);
+
+  setTimeout(()=>{
+    game.classList.remove("is-travelling");
+    if(openAfter){
+      showBubble(index,touring);
+    }
+  },1250);
+}
+
 function refresh(){
   applyTheme(current);
 
@@ -1253,6 +1416,7 @@ function refresh(){
   });
 
   const level=levels[current];
+  setMobileJourneyPosition(current);
 
   player.style.left=level.x+"%";
   player.style.top=level.y+"%";
@@ -1344,19 +1508,17 @@ function completeCurrentLevel(){
   bubble.classList.add("hide");
   setStoryOpen(false);
 
-  setTimeout(()=>{
-    if(current<levels.length-1){
-      unlocked=Math.max(unlocked,current+1);
-      current=current+1;
-      refresh();
-
-      setTimeout(()=>{
-        showBubble(current,touring);
-      },850);
-    }else{
+  if(current<levels.length-1){
+    const nextIndex=current+1;
+    unlocked=Math.max(unlocked,nextIndex);
+    setTimeout(()=>{
+      animateJourneyTo(nextIndex,true);
+    },260);
+  }else{
+    setTimeout(()=>{
       finishJourney();
-    }
-  },480);
+    },420);
+  }
 }
 
 function finishJourney(){
@@ -1396,19 +1558,16 @@ function advance(i){
   bubble.classList.add("hide");
   setStoryOpen(false);
 
-  setTimeout(()=>{
-    if(i<levels.length-1 && touring){
-      unlocked=i+1;
-      current=i+1;
-      refresh();
-
-      setTimeout(()=>{
-        showBubble(i+1,true);
-      },900);
-    }else if(i===levels.length-1){
+  if(i<levels.length-1 && touring){
+    unlocked=i+1;
+    setTimeout(()=>{
+      animateJourneyTo(i+1,true);
+    },260);
+  }else if(i===levels.length-1){
+    setTimeout(()=>{
       finishJourney();
-    }
-  },520);
+    },420);
+  }
 }
 
 
