@@ -722,6 +722,240 @@ header{
   }
 }
 
+
+/* FINAL MOBILE UX OVERRIDE: clean focused journey */
+@media(max-width:850px){
+  body{
+    overflow-x:hidden;
+  }
+
+  .hero{
+    padding:20px 14px 10px;
+  }
+
+  .hero h1{
+    font-size:clamp(2rem,10vw,3rem);
+    line-height:1;
+  }
+
+  .hero p{
+    font-size:.8rem;
+    line-height:1.4;
+    margin-bottom:10px;
+  }
+
+  .game-shell{
+    padding:18px 10px 42px;
+  }
+
+  .game{
+    height:560px;
+    min-height:560px;
+    overflow:hidden;
+    border-radius:18px;
+  }
+
+  .game::before,
+  .game::after{
+    display:none;
+  }
+
+  .hud{
+    left:10px;
+    right:10px;
+    top:10px;
+    width:auto;
+    max-width:none;
+    padding:8px 10px;
+    font-size:.64rem;
+  }
+
+  .bottom-hud{
+    left:10px;
+    right:10px;
+    bottom:66px;
+    width:auto;
+    padding:8px 10px;
+    transition:opacity .25s ease,transform .25s ease;
+  }
+
+  .bottom-hud .mission{
+    font-size:.55rem;
+  }
+
+  .bottom-hud .main{
+    font-size:.78rem;
+  }
+
+  .bottom-hud .reward{
+    font-size:.61rem;
+  }
+
+  .quest-btn{
+    left:10px;
+    right:10px;
+    bottom:10px;
+    width:auto;
+    padding:10px 12px;
+    transition:opacity .25s ease,transform .25s ease;
+  }
+
+  .level{
+    width:104px;
+    padding:7px;
+  }
+
+  .level .icon{
+    height:22px;
+    font-size:1rem;
+  }
+
+  .level .num{
+    font-size:.48rem;
+  }
+
+  .level .title{
+    font-size:.66rem;
+  }
+
+  .level .sub{
+    font-size:.5rem;
+  }
+
+  /* Keep only the current and next levels visible on phone */
+  .game:not(.journey-complete) .level.done,
+  .game:not(.journey-complete) .level.mobile-previous{
+    display:none!important;
+  }
+
+  .game:not(.journey-complete) .level.active{
+    left:50%!important;
+    top:43%!important;
+    transform:translate(-50%,-50%) scale(1.02);
+  }
+
+  .game:not(.journey-complete) .level.preview{
+    left:50%!important;
+    top:69%!important;
+    opacity:.28;
+    filter:blur(2.5px) grayscale(.6);
+    transform:translate(-50%,-50%) scale(.82);
+  }
+
+  .game:not(.journey-complete) .player{
+    left:50%!important;
+    top:43%!important;
+    width:38px;
+    height:38px;
+    font-size:1rem;
+  }
+
+  /* Story becomes a bottom sheet instead of covering the entire map */
+  .story-bubble{
+    position:fixed;
+    left:10px!important;
+    right:10px!important;
+    top:auto!important;
+    bottom:max(10px,env(safe-area-inset-bottom));
+    width:auto;
+    max-width:none;
+    max-height:58vh;
+    overflow:auto;
+    z-index:220;
+    padding:15px;
+    border-radius:22px;
+    transform:translateY(calc(100% + 24px))!important;
+    opacity:0;
+    pointer-events:none;
+    box-shadow:0 24px 70px rgba(48,42,38,.34);
+    -webkit-overflow-scrolling:touch;
+  }
+
+  .story-bubble::after{
+    display:none;
+  }
+
+  .story-bubble.show{
+    transform:translateY(0)!important;
+    opacity:1;
+    pointer-events:auto;
+  }
+
+  .story-bubble.hide{
+    transform:translateY(calc(100% + 24px))!important;
+    opacity:0;
+    pointer-events:none;
+  }
+
+  .story-bubble h3{
+    font-size:1rem;
+  }
+
+  .story-bubble p{
+    font-size:.7rem;
+    line-height:1.42;
+  }
+
+  .bubble-thought{
+    font-size:.64rem;
+    padding:8px;
+  }
+
+  .complete-level-btn{
+    position:sticky;
+    bottom:0;
+    min-height:50px;
+    margin-top:10px;
+  }
+
+  /* Remove competing controls while the story sheet is open */
+  .game.story-open .bottom-hud,
+  .game.story-open .quest-btn{
+    opacity:0;
+    pointer-events:none;
+    transform:translateY(12px);
+  }
+
+  .game.story-open::after{
+    content:"";
+    display:block;
+    position:absolute;
+    inset:0;
+    z-index:11;
+    background:rgba(48,42,38,.12);
+    pointer-events:none;
+  }
+
+  /* Completed mobile map: spacious zigzag */
+  .game.journey-complete{
+    height:980px;
+    min-height:980px;
+    overflow:visible;
+  }
+
+  .game.journey-complete .level{
+    width:102px;
+  }
+
+  .game.journey-complete .n1{left:27%!important;top:12%!important}
+  .game.journey-complete .n2{left:73%!important;top:21%!important}
+  .game.journey-complete .n3{left:27%!important;top:30%!important}
+  .game.journey-complete .n4{left:73%!important;top:39%!important}
+  .game.journey-complete .n5{left:27%!important;top:48%!important}
+  .game.journey-complete .n6{left:73%!important;top:57%!important}
+  .game.journey-complete .n7{left:27%!important;top:66%!important}
+  .game.journey-complete .n8{left:73%!important;top:75%!important}
+  .game.journey-complete .n9{left:27%!important;top:84%!important}
+  .game.journey-complete .n10{left:73%!important;top:93%!important}
+
+  .sound-toggle{
+    right:12px;
+    top:68px;
+    width:38px;
+    height:38px;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -1082,11 +1316,17 @@ function fillBubble(i){
  document.getElementById("bubbleThought").textContent=l.thought||"";
 }
 
+
+function setStoryOpen(isOpen){
+  document.getElementById("game").classList.toggle("story-open",isOpen);
+}
+
 function showBubble(i,auto=false){
   playSound("card");
  clearTimeout(timer);clearInterval(countTimer);
  current=i;unlocked=Math.max(unlocked,i);refresh();fillBubble(i);
  bubble.classList.remove("hide");bubble.classList.add("show");
+  setStoryOpen(true);
  if(auto){
    let sec=Math.ceil(HOLD/1000);document.getElementById("bubbleTime").textContent=sec+"s";
    countTimer=setInterval(()=>{sec--;document.getElementById("bubbleTime").textContent=Math.max(sec,0)+"s"},1000);
@@ -1102,6 +1342,7 @@ function completeCurrentLevel(){
 
   bubble.classList.remove("show");
   bubble.classList.add("hide");
+  setStoryOpen(false);
 
   setTimeout(()=>{
     if(current<levels.length-1){
@@ -1129,6 +1370,7 @@ function finishJourney(){
 
   bubble.classList.remove("show");
   bubble.classList.add("hide");
+  setStoryOpen(false);
 
   refresh();
   playSound("unlock");
@@ -1152,6 +1394,7 @@ function advance(i){
 
   bubble.classList.remove("show");
   bubble.classList.add("hide");
+  setStoryOpen(false);
 
   setTimeout(()=>{
     if(i<levels.length-1 && touring){
@@ -1206,6 +1449,7 @@ bubble.addEventListener("click",e=>{
   clearInterval(countTimer);
   bubble.classList.remove("show");
   bubble.classList.add("hide");
+  setStoryOpen(false);
 });
 document.addEventListener("keydown",e=>{if(e.key==="Escape"){touring=false;clearTimeout(timer);bubble.classList.remove("show");closeProject()}});
 
@@ -1276,6 +1520,7 @@ if(gameArea){
       clearInterval(countTimer);
       bubble.classList.remove("show");
       bubble.classList.add("hide");
+  setStoryOpen(false);
     }
   });
 }
