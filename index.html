@@ -110,14 +110,103 @@ header{
 }
 .hud b{color:var(--clay)} .hud span{display:block;color:var(--muted);margin-top:2px}
 .level{
- position:absolute;transform:translate(-50%,-50%);width:clamp(80px,12vw,150px);text-align:center;
- padding:clamp(5px,1.5vw,10px);border-radius:13px;background:rgba(255,250,245,.94);
- border:1px solid rgba(48,42,38,.12);box-shadow:0 9px 22px rgba(72,55,44,.14);
- cursor:pointer;z-index:5;transition:.25s
+ position:absolute;
+ transform:translate(-50%,-50%);
+ width:clamp(80px,12vw,150px);
+ text-align:center;
+ padding:clamp(5px,1.5vw,10px);
+ border-radius:13px;
+ background:rgba(255,250,245,.94);
+ border:1px solid rgba(48,42,38,.12);
+ box-shadow:0 9px 22px rgba(72,55,44,.14);
+ cursor:pointer;
+ z-index:5;
+ opacity:0;
+ visibility:hidden;
+ pointer-events:none;
+ filter:blur(5px) grayscale(.55);
+ transition:
+   opacity .55s ease,
+   filter .55s ease,
+   transform .55s ease,
+   box-shadow .55s ease,
+   border-color .55s ease;
 }
-.level:hover{transform:translate(-50%,-55%) scale(1.03)}
-.level.active{border:2px solid var(--clay);box-shadow:0 0 0 6px rgba(189,128,101,.13)}
-.level.done{border-color:var(--done)} .level.locked{opacity:.35;filter:grayscale(.8);cursor:not-allowed}
+
+.level.done{
+ opacity:.42;
+ visibility:visible;
+ pointer-events:auto;
+ filter:grayscale(.28);
+ border-color:var(--done);
+ transform:translate(-50%,-50%) scale(.9);
+}
+
+.level.active{
+ opacity:1;
+ visibility:visible;
+ pointer-events:auto;
+ filter:none;
+ z-index:8;
+ border:2px solid var(--clay);
+ box-shadow:
+   0 0 0 7px rgba(189,128,101,.16),
+   0 16px 34px rgba(72,55,44,.22);
+ transform:translate(-50%,-54%) scale(1.1);
+ animation:currentLevelPulse 2.2s ease-in-out infinite;
+}
+
+.level.preview{
+ opacity:.35;
+ visibility:visible;
+ pointer-events:none;
+ filter:blur(2px) grayscale(.5);
+ z-index:6;
+ transform:translate(-50%,-50%) scale(.9);
+}
+
+.level.locked{
+ opacity:0;
+ visibility:hidden;
+ pointer-events:none;
+}
+
+.level.done:hover{
+ opacity:.75;
+ transform:translate(-50%,-55%) scale(.96);
+}
+
+.game.journey-complete .level{
+ opacity:1;
+ visibility:visible;
+ pointer-events:auto;
+ filter:none;
+ transform:translate(-50%,-50%) scale(1);
+ animation:none;
+}
+
+.game.journey-complete .level:hover{
+ transform:translate(-50%,-55%) scale(1.04);
+}
+
+.game.journey-complete .player{
+ box-shadow:
+   0 0 0 9px rgba(241,195,143,.24),
+   0 12px 26px rgba(72,55,44,.24);
+}
+
+@keyframes currentLevelPulse{
+ 0%,100%{
+   box-shadow:
+     0 0 0 6px rgba(189,128,101,.13),
+     0 13px 28px rgba(72,55,44,.18);
+ }
+ 50%{
+   box-shadow:
+     0 0 0 12px rgba(189,128,101,.05),
+     0 18px 38px rgba(72,55,44,.25);
+ }
+}
 .level .icon{font-size:clamp(0.9rem,2.5vw,1.5rem);height:clamp(20px,3vw,32px);display:flex;align-items:center;justify-content:center}
 .level .num{font-size:clamp(0.4rem,1vw,0.7rem);color:var(--clay);font-weight:900;letter-spacing:.08em}
 .level .title{font-size:clamp(0.5rem,1.5vw,0.85rem);font-weight:900} .level .sub{font-size:clamp(0.4rem,1vw,0.65rem);color:var(--muted)}
@@ -308,29 +397,7 @@ header{
 .twist b{display:block;font-size:.72rem;margin-bottom:4px}
 .twist p{margin:0;color:var(--muted);font-size:.67rem;line-height:1.5}
 @media (max-width: 768px) {
-
-  .map,
-  .player,
-  .story-bubble {
-    display: block;
-  }
-
-  .level {
-    width: clamp(70px,10vw,120px);
-  }
-
-  .n1 { top: 6%; }
-  .n2 { top: 16%; }
-  .n3 { top: 26%; }
-  .n4 { top: 36%; }
-  .n5 { top: 46%; }
-  .n6 { top: 56%; }
-  .n7 { top: 66%; }
-  .n8 { top: 76%; }
-  .n9 { top: 86%; }
-  .n10 { top: 96%; }
-
-  .project-modal .flip-wrap {
+.project-modal .flip-wrap {
     width: 94vw;
     height: 88vh;
   }
@@ -382,8 +449,12 @@ header{
 }
 
 @media(max-width:850px){
- .game{height:clamp(500px,100vw,700px)}.map,.player,.story-bubble{display:block}.level{width:clamp(75px,11vw,130px)}
- .n1{top:6%}.n2{top:16%}.n3{top:26%}.n4{top:36%}.n5{top:46%}.n6{top:56%}.n7{top:66%}.n8{top:76%}.n9{top:86%}.n10{top:96%}
+ .game{height:clamp(520px,112vw,720px)}
+ .map,.player,.story-bubble{display:block}
+ .level{width:clamp(74px,22vw,112px)}
+ .story-bubble{width:min(82vw,340px)}
+ .level.active{transform:translate(-50%,-54%) scale(1.04)}
+ .level.preview{transform:translate(-50%,-50%) scale(.86)}
  .bottom-hud{width:calc(100% - 30px);bottom:65px}.quest-btn{left:15px;right:15px;text-align:center}
  .progress-wrap{min-width:130px}.progress-label{display:none}
  .hero-inner{grid-template-columns:1fr;text-align:center}
@@ -516,6 +587,141 @@ header{
   height:64px;
 }
 
+
+/* Mobile guided journey: focused, spacious, and non-stacked */
+@media(max-width:850px){
+  .game-shell{
+    padding:26px 12px 52px;
+  }
+
+  .game{
+    height:620px;
+    min-height:620px;
+    overflow:hidden;
+    border-radius:20px;
+  }
+
+  .hud{
+    left:10px;
+    top:10px;
+    max-width:calc(100% - 20px);
+    font-size:.68rem;
+  }
+
+  .bottom-hud{
+    left:10px;
+    bottom:64px;
+    width:calc(100% - 20px);
+    padding:9px 10px;
+  }
+
+  .quest-btn{
+    left:10px;
+    right:10px;
+    bottom:10px;
+    width:auto;
+    text-align:center;
+  }
+
+  .story-bubble{
+    width:min(86vw,330px);
+    max-height:245px;
+    overflow:auto;
+    padding:11px 12px;
+    transform:translate(-50%,calc(-100% - 34px)) translateY(16px) scale(.96);
+  }
+
+  .story-bubble.show{
+    transform:translate(-50%,calc(-100% - 34px)) translateY(0) scale(1);
+  }
+
+  .story-bubble.hide{
+    transform:translate(-50%,calc(-100% - 34px)) translateY(16px) scale(.96);
+  }
+
+  .level{
+    width:112px;
+    padding:7px 7px 8px;
+  }
+
+  .level .title{
+    font-size:.72rem;
+  }
+
+  .level .sub{
+    font-size:.54rem;
+  }
+
+  .player{
+    width:42px;
+    height:42px;
+    font-size:1.2rem;
+  }
+
+  /* During the journey, only show one completed step, current, and next */
+  .game:not(.journey-complete) .level.done{
+    display:none;
+  }
+
+  .game:not(.journey-complete) .level.mobile-previous{
+    display:block;
+    left:20%!important;
+    top:70%!important;
+    opacity:.42;
+    transform:translate(-50%,-50%) scale(.82);
+  }
+
+  .game:not(.journey-complete) .level.active{
+    left:50%!important;
+    top:47%!important;
+    transform:translate(-50%,-54%) scale(1.05);
+  }
+
+  .game:not(.journey-complete) .level.preview{
+    left:80%!important;
+    top:70%!important;
+    transform:translate(-50%,-50%) scale(.82);
+  }
+
+  .game:not(.journey-complete) .player{
+    left:50%!important;
+    top:47%!important;
+  }
+
+  .game:not(.journey-complete) .story-bubble{
+    left:50%!important;
+    top:47%!important;
+  }
+
+  /* Full map after completion: clean zigzag positions */
+  .game.journey-complete{
+    height:900px;
+    min-height:900px;
+    overflow:visible;
+  }
+
+  .game.journey-complete .level{
+    width:108px;
+    transform:translate(-50%,-50%) scale(.92);
+  }
+
+  .game.journey-complete .n1{left:24%!important;top:14%!important}
+  .game.journey-complete .n2{left:72%!important;top:22%!important}
+  .game.journey-complete .n3{left:28%!important;top:31%!important}
+  .game.journey-complete .n4{left:74%!important;top:40%!important}
+  .game.journey-complete .n5{left:27%!important;top:49%!important}
+  .game.journey-complete .n6{left:72%!important;top:58%!important}
+  .game.journey-complete .n7{left:28%!important;top:67%!important}
+  .game.journey-complete .n8{left:73%!important;top:76%!important}
+  .game.journey-complete .n9{left:30%!important;top:85%!important}
+  .game.journey-complete .n10{left:70%!important;top:94%!important}
+
+  .game.journey-complete .player{
+    left:70%!important;
+    top:94%!important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -578,7 +784,7 @@ header{
   <article class="level n10 locked" data-i="9"><div class="icon">🤖</div><div class="num">FINAL LEVEL</div><div class="title">AI Frontier</div><div class="sub">Decision Intelligence</div></article>
 
   <div class="bottom-hud"><div class="mission" id="missionLabel">MISSION · HYDERABAD</div><div class="main" id="missionText">Follow what feels interesting</div><div class="reward" id="rewardText">Unlocked: Systems Thinking</div></div>
-  <button class="quest-btn" onclick="document.getElementById('projects').scrollIntoView()">Project quests ↓</button>
+  <button class="quest-btn" id="questBtn" onclick="openProjects()">Project quests ↓</button>
  </section>
 </main>
 
@@ -771,7 +977,7 @@ const levels=[
  {icon:"🤖",title:"AI Frontier",sub:"Decision Intelligence",mission:"Build things people can trust",reward:"Impact Builder",thought:"I still do not know exactly how far this trail goes. That is the fun part.",story:"Now I am working where analytics, engineering, and AI meet. I do not want to build models only because I can. I want to build systems that help people understand what is happening, why it matters, and what to do next.",x:50,y:84,theme:["#ece8e4","#c9beb4","#857a72","#b66e5e"]}
 ];
 
-let current=0,unlocked=0,touring=false,timer=null,countTimer=null;
+let current=0,unlocked=0,touring=false,timer=null,countTimer=null,journeyComplete=false;
 const HOLD=10000;
 const cards=[...document.querySelectorAll(".level")];
 const player=document.getElementById("player");
@@ -788,18 +994,71 @@ function applyTheme(i){
 }
 
 function refresh(){
- applyTheme(current);
- cards.forEach((c,i)=>{c.classList.remove("active","done","locked");if(i<current)c.classList.add("done");else if(i===current)c.classList.add("active");else if(i>unlocked)c.classList.add("locked")});
- const l=levels[current];
- player.style.left=l.x+"%";player.style.top=l.y+"%";
- bubble.style.left=l.x+"%";bubble.style.top=l.y+"%";
- document.getElementById("hudLevel").textContent=`LEVEL ${current+1} / 10`;
- document.getElementById("hudText").textContent=`${l.title} · ${l.sub}`;
- document.getElementById("missionLabel").textContent=`MISSION · ${l.title.toUpperCase()}`;
- document.getElementById("missionText").textContent=l.mission;
- document.getElementById("rewardText").textContent=`Unlocked: ${l.reward}`;
- document.getElementById("progressBar").style.width=((current+1)/10*100)+"%";
- document.getElementById("progressLabel").textContent=`Level ${current+1} / 10`;
+  applyTheme(current);
+
+  const game=document.getElementById("game");
+  game.classList.toggle("journey-complete",journeyComplete);
+
+  cards.forEach((card,i)=>{
+    card.classList.remove("active","done","locked","preview","mobile-previous");
+
+    if(journeyComplete){
+      card.classList.add("done");
+    }else if(i<current){
+      card.classList.add("done");
+      if(i===current-1){
+        card.classList.add("mobile-previous");
+      }
+    }else if(i===current){
+      card.classList.add("active");
+    }else if(i===current+1){
+      card.classList.add("preview");
+    }else{
+      card.classList.add("locked");
+    }
+  });
+
+  const level=levels[current];
+
+  player.style.left=level.x+"%";
+  player.style.top=level.y+"%";
+  bubble.style.left=level.x+"%";
+  bubble.style.top=level.y+"%";
+
+  document.getElementById("hudLevel").textContent=journeyComplete
+    ? "JOURNEY COMPLETE"
+    : `LEVEL ${current+1} / ${levels.length}`;
+
+  document.getElementById("hudText").textContent=journeyComplete
+    ? "Full career map unlocked"
+    : `${level.title} · ${level.sub}`;
+
+  document.getElementById("missionLabel").textContent=journeyComplete
+    ? "ALL LEVELS COMPLETE"
+    : `MISSION · ${level.title.toUpperCase()}`;
+
+  document.getElementById("missionText").textContent=journeyComplete
+    ? "Explore the full trail or open the project quests"
+    : level.mission;
+
+  document.getElementById("rewardText").textContent=journeyComplete
+    ? "Unlocked: Complete Data Trail"
+    : `Unlocked: ${level.reward}`;
+
+  document.getElementById("progressBar").style.width=journeyComplete
+    ? "100%"
+    : `${((current+1)/levels.length)*100}%`;
+
+  document.getElementById("progressLabel").textContent=journeyComplete
+    ? `${levels.length} / ${levels.length}`
+    : `Level ${current+1} / ${levels.length}`;
+
+  const questBtn=document.getElementById("questBtn");
+  if(questBtn){
+    questBtn.textContent=journeyComplete
+      ? "View project quests ↓"
+      : "Project quests ↓";
+  }
 }
 
 function fillBubble(i){
@@ -837,35 +1096,76 @@ function showBubble(i,auto=false){
 
 
 function completeCurrentLevel(){
- playSound("complete");
- clearTimeout(timer);clearInterval(countTimer);
- bubble.classList.remove("show");
- bubble.classList.add("hide");
- setTimeout(()=>{
-   if(current<levels.length-1){
-     unlocked=Math.max(unlocked,current+1);
-     current=current+1;
-     refresh();
-     setTimeout(()=>showBubble(current,touring),850);
-   }else{
-     touring=false;
-     document.getElementById("projects").scrollIntoView({behavior:"smooth"});
-   }
- },480);
+  playSound("complete");
+  clearTimeout(timer);
+  clearInterval(countTimer);
+
+  bubble.classList.remove("show");
+  bubble.classList.add("hide");
+
+  setTimeout(()=>{
+    if(current<levels.length-1){
+      unlocked=Math.max(unlocked,current+1);
+      current=current+1;
+      refresh();
+
+      setTimeout(()=>{
+        showBubble(current,touring);
+      },850);
+    }else{
+      finishJourney();
+    }
+  },480);
+}
+
+function finishJourney(){
+  touring=false;
+  journeyComplete=true;
+  unlocked=levels.length-1;
+  current=levels.length-1;
+
+  clearTimeout(timer);
+  clearInterval(countTimer);
+
+  bubble.classList.remove("show");
+  bubble.classList.add("hide");
+
+  refresh();
+  playSound("unlock");
+
+  document.getElementById("game").scrollIntoView({
+    behavior:"smooth",
+    block:"center"
+  });
+}
+
+function openProjects(){
+  document.getElementById("projects").scrollIntoView({
+    behavior:"smooth",
+    block:"start"
+  });
 }
 
 function advance(i){
- playSound("move");
- clearInterval(countTimer);
- bubble.classList.remove("show");bubble.classList.add("hide");
- setTimeout(()=>{
-   if(i<levels.length-1 && touring){
-     unlocked=i+1;current=i+1;refresh();
-     setTimeout(()=>showBubble(i+1,true),900);
-   }else if(i===levels.length-1){
-     touring=false;document.getElementById("projects").scrollIntoView({behavior:"smooth"});
-   }
- },520);
+  playSound("move");
+  clearInterval(countTimer);
+
+  bubble.classList.remove("show");
+  bubble.classList.add("hide");
+
+  setTimeout(()=>{
+    if(i<levels.length-1 && touring){
+      unlocked=i+1;
+      current=i+1;
+      refresh();
+
+      setTimeout(()=>{
+        showBubble(i+1,true);
+      },900);
+    }else if(i===levels.length-1){
+      finishJourney();
+    }
+  },520);
 }
 
 
@@ -876,6 +1176,7 @@ function startJourney(){
   }catch(error){
     console.error("Journey start failed:", error);
     touring=true;
+    journeyComplete=false;
     current=0;
     unlocked=0;
     refresh();
@@ -886,12 +1187,18 @@ function startJourney(){
 
 function startTour(){
   playSound("move");
- clearTimeout(timer);clearInterval(countTimer);touring=true;current=0;unlocked=0;refresh();
+ clearTimeout(timer);clearInterval(countTimer);touring=true;journeyComplete=false;current=0;unlocked=0;refresh();
  document.getElementById("game").scrollIntoView({behavior:"smooth",block:"center"});
  setTimeout(()=>showBubble(0,true),850);
 }
 
-cards.forEach((c,i)=>c.addEventListener("click",()=>{if(i<=unlocked){touring=false;showBubble(i,false)}}));
+cards.forEach((card,i)=>card.addEventListener("click",()=>{
+  const canOpen=journeyComplete || i<=current;
+  if(canOpen){
+    touring=false;
+    showBubble(i,false);
+  }
+}));
 bubble.addEventListener("click",e=>{
   if(e.target.closest(".complete-level-btn")) return;
   touring=false;
