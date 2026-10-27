@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useMotionValue, useReducedMotion, useSpring } from "motion/react";
 import { asset, logoOrg, pad, type Project } from "@/lib/site";
 
@@ -13,6 +13,16 @@ export default function WorkList({ items }: { items: Item[] }) {
   const y = useMotionValue(0);
   const sx = useSpring(x, { stiffness: 260, damping: 28 });
   const sy = useSpring(y, { stiffness: 260, damping: 28 });
+  // only real mouse pointers get the hover preview: on iPhone/iPad a hover-driven
+  // DOM change makes Safari swallow the first tap, so the row needs two taps to open
+  const [canHover, setCanHover] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(hover: hover) and (pointer: fine)");
+    const update = () => setCanHover(mq.matches && (navigator.maxTouchPoints ?? 0) === 0);
+    update();
+    mq.addEventListener?.("change", update);
+    return () => mq.removeEventListener?.("change", update);
+  }, []);
 
   const onMove = (e: React.MouseEvent) => {
     x.set(e.clientX);
@@ -20,7 +30,7 @@ export default function WorkList({ items }: { items: Item[] }) {
   };
 
   return (
-    <div className="work" onMouseMove={onMove} onMouseLeave={() => setHover(null)}>
+    <div className="work" onMouseMove={canHover ? onMove : undefined} onMouseLeave={canHover ? () => setHover(null) : undefined}>
       <ul className="work__list">
         {items.map((item, i) => {
           const p = item.project;
@@ -37,6 +47,7 @@ export default function WorkList({ items }: { items: Item[] }) {
                 className="row"
                 style={{ "--accent": p.theme.accent, "--tint": p.theme.bg2, "--ink-p": p.theme.ink } as React.CSSProperties}
                 onMouseEnter={(e) => {
+                  if (!canHover) return;
                   if (!hover) {
                     sx.jump(e.clientX);
                     sy.jump(e.clientY);
@@ -69,7 +80,7 @@ export default function WorkList({ items }: { items: Item[] }) {
       </ul>
 
       <AnimatePresence>
-        {hover && !reduce && (
+        {hover && canHover && !reduce && (
           <motion.div
             className="preview"
             aria-hidden="true"

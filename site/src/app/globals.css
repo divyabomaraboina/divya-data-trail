@@ -1831,11 +1831,13 @@ button {
 .row:hover {
   padding-left: 14px;
 }
-.case__row {
-  grid-template-columns: minmax(0, 0.38fr) minmax(0, 1fr);
-}
-.journey__grid {
-  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+@media (min-width: 901px) {
+  .case__row {
+    grid-template-columns: minmax(0, 0.38fr) minmax(0, 1fr);
+  }
+  .journey__grid {
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  }
 }
 
 /* type scale */
@@ -2344,4 +2346,98 @@ body { font-size: 18px; }
 @media (max-width: 900px) {
   .row { grid-template-columns: 30px minmax(0, 1fr) 24px; }
   .row__org { font-size: 0.86rem; }
+}
+
+/* v10: iPhone / iPad Safari */
+html {
+  -webkit-tap-highlight-color: transparent;
+}
+[id] {
+  scroll-margin-top: 20px;
+}
+/* big blurred layers flicker or vanish in mobile Safari; radial gradients are soft enough alone */
+@media (pointer: coarse), (hover: none) {
+  .blob,
+  .case__glow {
+    filter: none;
+    animation: none;
+  }
+  .nav--scrolled {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    background: rgba(255, 255, 255, 0.96);
+  }
+  .row,
+  .logo,
+  .btn,
+  .tab,
+  .nav__link,
+  .menu__link {
+    touch-action: manipulation;
+  }
+}
+/* hero: "Hi! I'm Divya" a bit larger */
+.hero__title {
+  font-size: clamp(2.6rem, 6vw, 5.4rem);
+}
+@media (max-width: 560px) {
+  .hero__title {
+    font-size: clamp(2.4rem, 12.5vw, 3.3rem);
+  }
+}
+
+.case__brand {
+  position: absolute;
+  right: var(--edge);
+  top: clamp(110px, 12vw, 150px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  max-width: 150px;
+  text-align: center;
+}
+.case__brand .case__logo {
+  position: static;
+  width: auto;
+  height: clamp(56px, 7vw, 96px);
+  max-width: 140px;
+  object-fit: contain;
+}
+.case__org {
+  font-size: 0.86rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+@media (max-width: 900px) {
+  .case__brand {
+    position: static;
+    flex-direction: row;
+    max-width: none;
+    margin: 0 0 18px;
+    text-align: left;
+  }
+  .case__brand .case__logo {
+    height: 40px;
+  }
+}
+@media (max-width: 560px) {
+  .row {
+    grid-template-columns: minmax(0, 1fr) 22px;
+    grid-template-areas:
+      "brand arrow"
+      "main arrow";
+    column-gap: 12px;
+  }
+  .row__num {
+    display: none;
+  }
+  .row:hover,
+  .row:active {
+    padding-left: 0;
+  }
+}
+.stop__title span {
+  font-size: 0.95rem;
+  font-weight: 500;
 }

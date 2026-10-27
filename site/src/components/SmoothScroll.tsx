@@ -3,6 +3,8 @@ import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import Lenis from "lenis";
 
+const OFFSET = 20;
+
 const findTarget = (hash: string) => {
   if (!hash || hash === "#") return null;
   try {
@@ -12,16 +14,19 @@ const findTarget = (hash: string) => {
   }
 };
 
+// iPads report a fine pointer when a trackpad is attached, so also check touch points
+const isTouchDevice = () =>
+  window.matchMedia("(pointer: coarse)").matches || (navigator.maxTouchPoints ?? 0) > 0;
+
 export default function SmoothScroll() {
   const pathname = usePathname();
   const lenisRef = useRef<Lenis | null>(null);
 
   useEffect(() => {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const touch = window.matchMedia("(pointer: coarse)").matches;
     let lenis: Lenis | null = null;
     let id = 0;
-    if (!reduce && !touch) {
+    if (!reduce && !isTouchDevice()) {
       lenis = new Lenis({ duration: 1.15, easing: (t) => 1 - Math.pow(1 - t, 4) });
       lenisRef.current = lenis;
       const raf = (time: number) => {
@@ -31,10 +36,10 @@ export default function SmoothScroll() {
       id = requestAnimationFrame(raf);
     }
 
-    const scrollTo = (target: HTMLElement | number, immediate = false) => {
-      if (lenis) lenis.scrollTo(target, { offset: typeof target === "number" ? 0 : -20, immediate, force: true });
-      else if (typeof target === "number") window.scrollTo({ top: target, behavior: immediate || reduce ? "auto" : "smooth" });
-      else target.scrollIntoView({ behavior: immediate || reduce ? "auto" : "smooth", block: "start" });
+    const scrollTo = (target: HTMLElement | null) => {
+      const top = target ? target.getBoundingClientRect().top + window.scrollY - OFFSET : 0;
+      if (lenis) lenis.scrollTo(top, { force: true });
+      else window.scrollTo({ top, behavior: reduce ? "auto" : "smooth" });
     };
 
     // same-page links ("/#work", "/") scroll smoothly instead of jumping
@@ -46,9 +51,8 @@ export default function SmoothScroll() {
       if (url.origin !== window.location.origin || url.pathname !== window.location.pathname) return;
       e.preventDefault();
       e.stopPropagation();
-      const el = findTarget(url.hash);
       history.pushState(null, "", url.hash || url.pathname);
-      scrollTo(el ?? 0);
+      scrollTo(findTarget(url.hash));
     };
     document.addEventListener("click", onClick, true);
 
@@ -60,25 +64,31 @@ export default function SmoothScroll() {
     };
   }, []);
 
-  // arriving from another page: land on the hash, or the top
+  // arriving on a page: land on the hash (or the top), but never fight the visitor's own scrolling
   useEffect(() => {
     if ("scrollRestoration" in history) history.scrollRestoration = "manual";
-    const land = () => {
-      const el = findTarget(window.location.hash);
-      const lenis = lenisRef.current;
-      if (el) {
-        const top = el.getBoundingClientRect().top + window.scrollY - 20;
-        if (lenis) lenis.scrollTo(top, { immediate: true, force: true });
-        else window.scrollTo(0, top);
-      } else if (lenis) {
-        lenis.scrollTo(0, { immediate: true, force: true });
-      } else {
-        window.scrollTo(0, 0);
-      }
+    let cancelled = false;
+    const stop = () => {
+      cancelled = true;
     };
-    // re-land once fonts, images and entrance animations have settled the layout
-    const timers = [60, 350, 900].map((ms) => window.setTimeout(land, ms));
-    return () => timers.forEach((t) => window.clearTimeout(t));
+    const events = ["wheel", "touchstart", "keydown", "pointerdown"] as const;
+    events.forEach((ev) => window.addEventListener(ev, stop, { passive: true, once: true }));
+
+    const land = () => {
+      if (cancelled) return;
+      const el = findTarget(window.location.hash);
+      const top = el ? el.getBoundingClientRect().top + window.scrollY - OFFSET : 0;
+      if (Math.abs(window.scrollY - top) < 2) return;
+      const lenis = lenisRef.current;
+      if (lenis) lenis.scrollTo(top, { immediate: true, force: true });
+      else window.scrollTo(0, top);
+    };
+    // re-check once fonts, images and entrance animations have settled the layout
+    const timers = (window.location.hash ? [60, 350, 900] : [60]).map((ms) => window.setTimeout(land, ms));
+    return () => {
+      timers.forEach((t) => window.clearTimeout(t));
+      events.forEach((ev) => window.removeEventListener(ev, stop));
+    };
   }, [pathname]);
 
   return null;

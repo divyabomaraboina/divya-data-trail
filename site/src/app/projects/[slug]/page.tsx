@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Lines, Reveal } from "@/components/Reveal";
-import { asset, pad, projects } from "@/lib/site";
+import { asset, logoOrg, pad, projects } from "@/lib/site";
 
 export function generateStaticParams() {
   return projects.map((p) => ({ slug: p.slug }));
@@ -68,7 +68,12 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
             )}
           </div>
         </Reveal>
-        {p.logo && <img src={asset(`/img/${p.logo}`)} alt="" className="case__logo float" aria-hidden="true" />}
+        {p.logo && (
+          <span className="case__brand">
+            <img src={asset(`/img/${p.logo}`)} alt="" className="case__logo float" aria-hidden="true" />
+            {logoOrg[p.logo] && <span className="case__org">{logoOrg[p.logo]}</span>}
+          </span>
+        )}
       </header>
 
       <section className="case__value" aria-label="Business value">
