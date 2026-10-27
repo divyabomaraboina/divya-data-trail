@@ -1,5 +1,6 @@
 import Hero from "@/components/Hero";
 import LogoStrip from "@/components/LogoStrip";
+import Stats from "@/components/Stats";
 import ProjectTiles from "@/components/ProjectTiles";
 import Marquee from "@/components/Marquee";
 import Journey from "@/components/Journey";
@@ -10,6 +11,7 @@ export default function Home() {
   return (
     <>
       <Hero />
+      <Stats />
       <LogoStrip />
 
       <section id="work" className="section" aria-labelledby="work-title">
