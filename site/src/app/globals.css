@@ -2441,3 +2441,24 @@ html {
   font-size: 0.95rem;
   font-weight: 500;
 }
+/* v11: phone row layout up to tablet width so titles share the content edge */
+@media (max-width: 900px) {
+  .row {
+    grid-template-columns: minmax(0, 1fr) 24px;
+    grid-template-areas:
+      "brand arrow"
+      "main arrow";
+    column-gap: 12px;
+  }
+  .row__num {
+    display: none;
+  }
+  .row:hover,
+  .row:active {
+    padding-left: 0;
+  }
+  .section,
+  .journey {
+    padding-top: clamp(64px, 12vw, 110px);
+  }
+}
