@@ -1,0 +1,585 @@
+[
+ {
+  "category": "Professional Work",
+  "title": "AquaWatch Water Risk Ranking",
+  "subtitle": "Ranking water risk for every municipality in Ceará, Brazil, and showing how far to trust each score",
+  "problem": "Field teams needed to know which of Ceará's 184 municipalities faced the highest water risk, but 142 of them (77%) had no utility records. A simple ranking would have hidden how uncertain it really was.",
+  "approach": "I joined census, utility and satellite data in one reproducible pipeline, normalized risk by percentile rank instead of min-max scaling so outliers like Fortaleza and Jaguaribara could not distort the index, and let K-means find natural tier breakpoints instead of imposing policy thresholds.",
+  "built": "A 13-step Python pipeline over IBGE Census, SNIS utility and JRC satellite data, zonal statistics on 338MB of raster tiles with Rasterio and GeoPandas, a 0.05 to 0.774 risk index, K-means tiers, a 3-dimension confidence framework, worst-case sensitivity analysis, and a verify_priority field for a dispatch-ready verification table.",
+  "value": "All 184 municipalities ranked into 55 Critical, 65 High, 40 Medium and 24 Low tiers, with a verification table that tells field teams where to check first.",
+  "stack": [
+   "Python",
+   "GeoPandas",
+   "Rasterio",
+   "Zonal Statistics",
+   "K-Means",
+   "Sensitivity Analysis"
+  ],
+  "twists": [
+   {
+    "title": "The missing data was the finding",
+    "text": "77% of municipalities had no utility records. Instead of quietly filling the gap, I built a confidence framework, and it flagged none of the 55 Critical ratings as high-confidence."
+   },
+   {
+    "title": "Min-max scaling would have misled",
+    "text": "A few extreme municipalities would have squeezed everyone else together, so I normalized every risk variable by percentile rank."
+   },
+   {
+    "title": "Tiers came from the data, not a policy line",
+    "text": "K-means (k=4) found natural breakpoints, and a worst-case sensitivity test (0% coverage imputation) checked how stable each tier was before anything reached the field."
+   }
+  ],
+  "github": "",
+  "live": "",
+  "theme": {
+   "bg1": "#f2f8ef",
+   "bg2": "#cfe5c8",
+   "accent": "#16731f",
+   "accent2": "#2f86b5",
+   "ink": "#16301a"
+  },
+  "slug": "aquawatch-water-risk",
+  "logo": "livingstones-mark.png"
+ },
+ {
+  "category": "Professional Work",
+  "title": "Nexodus Data Automation",
+  "subtitle": "Turning disconnected KPIs into a repeatable reporting system",
+  "problem": "Zoho Social and Zoho CRM held different pieces of the business picture. Reporting required repeated extraction, reconciliation, and manual checks, so numbers were slow and inconsistent.",
+  "approach": "I mapped the KPI sources first, audited existing records for mismatches, and designed the workflow around the real business-review cycle.",
+  "built": "Python and Selenium extraction, five Power BI dashboards, DAX measures, refresh workflows, historical retention, and audits across 1,000+ records.",
+  "value": "The team moved to one reporting flow and reduced recurring KPI reporting time by 70%.",
+  "stack": [
+   "Python",
+   "Selenium",
+   "Power BI",
+   "DAX",
+   "Excel",
+   "Zoho"
+  ],
+  "twists": [
+   {
+    "title": "The dashboard was not step one",
+    "text": "I first had to understand why numbers disagreed across systems. Validation and reconciliation came before visualization."
+   },
+   {
+    "title": "History was part of the solution",
+    "text": "The workflow also needed to preserve data beyond the source platform's retention limits."
+   },
+   {
+    "title": "The real win was time",
+    "text": "The strongest outcome was not technical complexity. It was giving the team back hours every reporting cycle."
+   }
+  ],
+  "github": "",
+  "live": "",
+  "theme": {
+   "bg1": "#f8fbff",
+   "bg2": "#dceef8",
+   "accent": "#1696d2",
+   "accent2": "#c69b2d",
+   "ink": "#153249"
+  },
+  "slug": "nexodus-automation",
+  "logo": "nexodus-mark.png"
+ },
+ {
+  "category": "Professional Work",
+  "title": "Nexodus NLP & Data Quality",
+  "subtitle": "Building trust in structured data before analyzing unstructured content",
+  "problem": "Daily CRM and social data had no validation layer, while audience perception was hidden inside more than 1,000 captions and comments.",
+  "approach": "I separated the work into structured-data validation for reporting trust and BERT-based NLP for recurring audience patterns.",
+  "built": "MySQL and Pandas validation workflows, preprocessing, tokenization, BERT analysis, and stakeholder-ready reporting notes.",
+  "value": "15+ issues were caught weekly before downstream reporting, and content discussions moved from intuition toward evidence.",
+  "stack": [
+   "MySQL",
+   "Python",
+   "Pandas",
+   "BERT",
+   "NLP",
+   "Reporting"
+  ],
+  "twists": [
+   {
+    "title": "AI was not the first problem",
+    "text": "Basic field and formatting errors could damage reporting before any model was used."
+   },
+   {
+    "title": "Themes needed translation",
+    "text": "Topic and sentiment outputs mattered only after they were explained in business language."
+   },
+   {
+    "title": "Trust came before sophistication",
+    "text": "Clean inputs and documented assumptions created more value than model tuning alone."
+   }
+  ],
+  "github": "",
+  "live": "",
+  "theme": {
+   "bg1": "#f6fbff",
+   "bg2": "#d6edf5",
+   "accent": "#167fa8",
+   "accent2": "#8aa33d",
+   "ink": "#143444"
+  },
+  "slug": "nexodus-nlp",
+  "logo": "nexodus-mark.png"
+ },
+ {
+  "category": "Industry-Sponsored Project",
+  "title": "AnaChart Analyst Accuracy",
+  "subtitle": "Making analyst recommendations comparable and measurable",
+  "problem": "55,106 recommendations across 98 NASDAQ-100 stocks used 164 rating labels, making comparison unreliable. The baseline model was barely better than random.",
+  "approach": "I standardized the labels, used leakage-aware validation, and engineered stock-difficulty and analyst-momentum features.",
+  "built": "BigQuery analytical tables, systematic label mapping, XGBoost models, analyst segmentation, and a Streamlit prototype.",
+  "value": "AUC improved from 0.59 to 0.857, creating a clearer way to compare analyst performance and understand accuracy drivers.",
+  "stack": [
+   "Python",
+   "SQL",
+   "BigQuery",
+   "XGBoost",
+   "Streamlit",
+   "Feature Engineering"
+  ],
+  "twists": [
+   {
+    "title": "Cleaning created the comparison layer",
+    "text": "Reducing 164 labels into five consistent segments was the foundation of the model."
+   },
+   {
+    "title": "Accuracy needed context",
+    "text": "Analyst performance changes when the stock itself is difficult to predict."
+   },
+   {
+    "title": "Recent behavior carried signal",
+    "text": "Momentum features added information that long-run averages missed."
+   }
+  ],
+  "github": "https://github.com/divyabomaraboina",
+  "live": "https://divyacapstoneproject.streamlit.app/",
+  "theme": {
+   "bg1": "#f7f5ff",
+   "bg2": "#ddd5f4",
+   "accent": "#6750a4",
+   "accent2": "#d3a43b",
+   "ink": "#2b2140"
+  },
+  "slug": "anachart",
+  "logo": "anachart-mark.png"
+ },
+ {
+  "category": "Industry-Sponsored Project",
+  "title": "Traxidy Risk Analytics",
+  "subtitle": "Turning fragmented project records into cross-project risk signals",
+  "problem": "Project performance data lived in 76 SQL tables, and teams defined delay and status differently. Leadership lacked a consistent cross-project view.",
+  "approach": "I reduced the data model, standardized GYR and delay definitions, and focused the analysis on actionable root causes.",
+  "built": "Eleven analytical tables, operational KPIs, Random Forest and LSTM models, Tableau dashboards, and a chatbot prototype.",
+  "value": "The analysis surfaced resource constraints and scope changes as major delay drivers, helping leadership prioritize interventions.",
+  "stack": [
+   "SQL",
+   "Python",
+   "Random Forest",
+   "LSTM",
+   "Tableau",
+   "FastAPI"
+  ],
+  "twists": [
+   {
+    "title": "More tables did not create more insight",
+    "text": "The key move was reducing 76 scattered tables into 11 usable structures."
+   },
+   {
+    "title": "Definitions had to be fixed first",
+    "text": "A model cannot learn consistently when teams label risk differently."
+   },
+   {
+    "title": "The chatbot was an access layer",
+    "text": "Its value came from making trusted metrics easier to reach, not from being the main product."
+   }
+  ],
+  "github": "https://github.com/divyabomaraboina",
+  "live": "",
+  "theme": {
+   "bg1": "#f4f7fa",
+   "bg2": "#d8e0e7",
+   "accent": "#3c5873",
+   "accent2": "#c08a45",
+   "ink": "#1e2d3a"
+  },
+  "slug": "traxidy",
+  "logo": "traxidy-mark.png"
+ },
+ {
+  "category": "Personal & Academic Project",
+  "title": "Warehouse Sales Intelligence",
+  "subtitle": "A full decision system built around validation before modeling",
+  "problem": "307,000+ records contained a $7,800 anomaly, an 83% gap in 2018, leakage risks, uncertain seasonality, and insights locked inside technical tools.",
+  "approach": "I built the project in layers: audit, Medallion architecture, leakage-safe modeling, statistical testing, forecasting, then conversational access.",
+  "built": "Bronze-Silver-Gold pipeline, DuckDB, XGBoost, Prophet, A/B testing, drift detection, and an AI agent with human approval.",
+  "value": "77% honest demand accuracy, a $271,070 seasonal opportunity, and a $462,768 November peak forecast.",
+  "stack": [
+   "Python",
+   "DuckDB",
+   "Parquet",
+   "XGBoost",
+   "Prophet",
+   "Groq",
+   "Medallion"
+  ],
+  "twists": [
+   {
+    "title": "The first accuracy was too good",
+    "text": "Three leakage types inflated performance. Fixing them lowered the number but made it honest."
+   },
+   {
+    "title": "The summer spike needed proof",
+    "text": "Statistical testing showed Beer drove 95% of the seasonal premium while Wine and Kegs behaved differently."
+   },
+   {
+    "title": "The AI layer came last",
+    "text": "The agent became useful only after SQL, model, and forecast outputs were stable and reviewable."
+   }
+  ],
+  "github": "https://github.com/divyabomaraboina",
+  "live": "https://warehouse-intelligence-system-divyabomaraboina.streamlit.app/",
+  "theme": {
+   "bg1": "#fff7e8",
+   "bg2": "#e8c99e",
+   "accent": "#a65f23",
+   "accent2": "#687d3b",
+   "ink": "#3c2718"
+  },
+  "slug": "warehouse-intelligence",
+  "logo": ""
+ },
+ {
+  "category": "Personal & Academic Project",
+  "title": "Hospital Readmission Risk",
+  "subtitle": "Turning fragmented EHR history into an actionable early-warning signal",
+  "problem": "Patient data was spread across 16 relational tables with duplicate IDs, overlapping dates, and inconsistent care episodes.",
+  "approach": "I resolved identity and time alignment first, engineered clinically meaningful features, and used leakage-safe evaluation.",
+  "built": "PostgreSQL integration, keyed joins, date alignment, clinically informed imputation, 22 features, stratified validation, and Streamlit.",
+  "value": "The model reached 0.82 ROC-AUC and produced a ranked high-risk list for care-coordination prioritization.",
+  "stack": [
+   "PostgreSQL",
+   "Python",
+   "Scikit-learn",
+   "Feature Engineering",
+   "Streamlit"
+  ],
+  "twists": [
+   {
+    "title": "Integration was harder than modeling",
+    "text": "The same patient appeared across multiple tables and care episodes with conflicting timing."
+   },
+   {
+    "title": "Leakage changed the evaluation",
+    "text": "Future information had to be removed before performance could be trusted."
+   },
+   {
+    "title": "A score was not enough",
+    "text": "The final output emphasized ranked patients and understandable risk factors."
+   }
+  ],
+  "github": "https://github.com/divyabomaraboina",
+  "live": "https://30-day-hospital-readmission-risk-predictor.streamlit.app/",
+  "theme": {
+   "bg1": "#f2fbff",
+   "bg2": "#cfe9f1",
+   "accent": "#1686a5",
+   "accent2": "#d85b68",
+   "ink": "#17313a"
+  },
+  "slug": "hospital-readmission",
+  "logo": ""
+ },
+ {
+  "category": "Personal & Academic Project",
+  "title": "Medical Image Analyzer",
+  "subtitle": "Designing two reliable explanations from one clinical image",
+  "problem": "Clinicians and patients need different outputs from the same X-ray, while raw multimodal prompts can produce inconsistent structure and language.",
+  "approach": "I treated prompt design like interface design: separate audiences, explicit roles, structured sections, and secure handling.",
+  "built": "A clinical-report prompt, a plain-language explanation prompt, a Streamlit workflow, and secure API configuration.",
+  "value": "One image produced both a structured professional report and a clearer patient-facing explanation.",
+  "stack": [
+   "Python",
+   "GPT-4o",
+   "Prompt Engineering",
+   "Streamlit",
+   "API Security"
+  ],
+  "twists": [
+   {
+    "title": "One answer could not serve two audiences",
+    "text": "Clinical precision and plain-language understanding required separate prompt paths."
+   },
+   {
+    "title": "Structure improved reliability",
+    "text": "Explicit output sections reduced variation more than a generic request for a better answer."
+   },
+   {
+    "title": "Prompting was product design",
+    "text": "The challenge was building a repeatable experience around model capability."
+   }
+  ],
+  "github": "https://github.com/divyabomaraboina",
+  "live": "",
+  "theme": {
+   "bg1": "#f6f4ff",
+   "bg2": "#d8d2ef",
+   "accent": "#6d5ea8",
+   "accent2": "#4f9ca8",
+   "ink": "#29233e"
+  },
+  "slug": "medical-image-analyzer",
+  "logo": ""
+ },
+ {
+  "category": "Personal & Academic Project",
+  "title": "Behavioral Risk & Bed Demand",
+  "subtitle": "Protecting population patterns while forecasting regional capacity",
+  "problem": "212,000+ records included more than 10,000 missing values. Naive imputation risked distorting population-level patterns.",
+  "approach": "I designed cleaning around preserving distributions, then compared linear and nonlinear models for demand forecasting.",
+  "built": "Structured imputation, Gradient Boosting, Ridge Regression, and Tableau dashboards.",
+  "value": "Behavioral indicators were translated into interpretable regional demand and capacity-strain signals.",
+  "stack": [
+   "Python",
+   "Gradient Boosting",
+   "Ridge Regression",
+   "Tableau",
+   "Imputation"
+  ],
+  "twists": [
+   {
+    "title": "Missing data was a modeling decision",
+    "text": "The imputation method could materially change the population story."
+   },
+   {
+    "title": "Two model families improved judgment",
+    "text": "Ridge supported interpretation while Gradient Boosting captured nonlinear patterns."
+   },
+   {
+    "title": "The dashboard completed the workflow",
+    "text": "Forecasts became useful only after they were translated into planning views."
+   }
+  ],
+  "github": "https://github.com/divyabomaraboina",
+  "live": "",
+  "theme": {
+   "bg1": "#eef8f2",
+   "bg2": "#cfe2d4",
+   "accent": "#447b5b",
+   "accent2": "#c47d56",
+   "ink": "#20352a"
+  },
+  "slug": "bed-demand",
+  "logo": ""
+ },
+ {
+  "category": "Personal & Academic Project",
+  "title": "Hospitality Revenue Dashboard",
+  "subtitle": "Standardizing hotel performance before visualizing it",
+  "problem": "More than 10 properties used disconnected spreadsheets and inconsistent KPI definitions, making cross-location comparisons unreliable.",
+  "approach": "I began with stakeholder requirements and KPI definitions, then designed the analytical model before the dashboard.",
+  "built": "A star-schema SQL model, standardized property data, Power BI dashboards, and DAX measures for RevPAR, DBRN, occupancy, and revenue.",
+  "value": "Management gained self-service cross-property performance visibility from one consistent KPI layer.",
+  "stack": [
+   "SQL",
+   "Star Schema",
+   "Power BI",
+   "DAX",
+   "Stakeholder Requirements"
+  ],
+  "twists": [
+   {
+    "title": "The KPI dictionary came first",
+    "text": "A polished dashboard would still be wrong if each property defined performance differently."
+   },
+   {
+    "title": "The semantic layer created trust",
+    "text": "Standard definitions made cross-location comparison possible."
+   },
+   {
+    "title": "Self-service changed the value",
+    "text": "The dashboard reduced dependence on disconnected manual reports."
+   }
+  ],
+  "github": "https://github.com/divyabomaraboina",
+  "live": "",
+  "theme": {
+   "bg1": "#fff8ef",
+   "bg2": "#ead5bd",
+   "accent": "#9a653d",
+   "accent2": "#6f8764",
+   "ink": "#3a281d"
+  },
+  "slug": "hospitality-revenue",
+  "logo": ""
+ },
+ {
+  "category": "Personal & Academic Project",
+  "title": "HIV Epidemiological Database",
+  "subtitle": "Creating a governed foundation for cross-country analysis",
+  "problem": "CDC, World Bank, and UNAIDS published data in different formats, country conventions, indicator definitions, and time ranges.",
+  "approach": "I treated source integration as a governance problem, resolving entities, indicators, lineage, and reproducibility.",
+  "built": "Five integrated sources, six normalized MySQL/PostgreSQL tables, ER schemas, data dictionaries, and governance rules.",
+  "value": "Researchers could perform reproducible longitudinal and cross-country analysis from one documented database.",
+  "stack": [
+   "MySQL",
+   "PostgreSQL",
+   "Normalization",
+   "Data Governance",
+   "ER Modeling"
+  ],
+  "twists": [
+   {
+    "title": "Country names were data-quality issues",
+    "text": "Small naming differences prevented reliable joins across global sources."
+   },
+   {
+    "title": "Definitions mattered as much as values",
+    "text": "Indicators with similar names did not always measure the same thing."
+   },
+   {
+    "title": "Documentation was part of the product",
+    "text": "Lineage and data dictionaries made the database reusable by others."
+   }
+  ],
+  "github": "https://github.com/divyabomaraboina",
+  "live": "",
+  "theme": {
+   "bg1": "#f7eef5",
+   "bg2": "#dfc9d8",
+   "accent": "#9c4f79",
+   "accent2": "#477e72",
+   "ink": "#402638"
+  },
+  "slug": "hiv-database",
+  "logo": ""
+ },
+ {
+  "category": "Personal & Academic Project",
+  "title": "Ride-Share Demand Segmentation",
+  "subtitle": "Finding behavior patterns inside 693,000+ ride records",
+  "problem": "Ride prices varied widely, but there was no clear segmentation of user behavior or pricing drivers.",
+  "approach": "I grouped rides by behavioral patterns first, then modeled pricing drivers within and across those segments.",
+  "built": "K-Means clustering, three demand tiers, and Random Forest regression across time, distance, and pricing conditions.",
+  "value": "The analysis revealed distinct demand behaviors and achieved RMSE 8.36 for pricing prediction.",
+  "stack": [
+   "Python",
+   "K-Means",
+   "Random Forest",
+   "Feature Engineering"
+  ],
+  "twists": [
+   {
+    "title": "One average hid several behaviors",
+    "text": "Segmentation showed that one-size-fits-all pricing analysis was misleading."
+   },
+   {
+    "title": "Clustering came before prediction",
+    "text": "The groups provided context for interpreting pricing drivers."
+   },
+   {
+    "title": "Python only",
+    "text": "The project was completed in Python without adding tools that were not actually used."
+   }
+  ],
+  "github": "https://github.com/divyabomaraboina",
+  "live": "",
+  "theme": {
+   "bg1": "#f1f4f7",
+   "bg2": "#d6dee5",
+   "accent": "#3d5f7a",
+   "accent2": "#e1a43f",
+   "ink": "#21313e"
+  },
+  "slug": "rideshare-segmentation",
+  "logo": ""
+ },
+ {
+  "category": "Personal & Academic Project",
+  "title": "Fashion-MNIST Classifier API",
+  "subtitle": "Turning a computer-vision model into a deployable prediction service",
+  "problem": "A high-performing image classifier is not useful to others when it only runs inside a notebook. The challenge was to make inference reliable, repeatable, and accessible through an API.",
+  "approach": "I separated training from serving, validated the model on unseen images, and designed the deployment around a lightweight prediction endpoint.",
+  "built": "A ResNet18 classifier trained on 60,000 Fashion-MNIST images, a FastAPI top-k inference endpoint, Gunicorn serving, Docker and Docker Compose packaging, and GCP deployment patterns.",
+  "value": "The project moved from model experimentation to a reusable microservice that could be called by another application.",
+  "stack": [
+   "Python",
+   "PyTorch",
+   "ResNet18",
+   "FastAPI",
+   "Gunicorn",
+   "Docker",
+   "GCP"
+  ],
+  "twists": [
+   {
+    "title": "Accuracy was only the first milestone",
+    "text": "The larger learning came from packaging the model so another system could call it consistently."
+   },
+   {
+    "title": "Training and inference needed different workflows",
+    "text": "The notebook optimized learning, while the API needed fast loading, validation, and predictable output."
+   },
+   {
+    "title": "Deployment exposed hidden assumptions",
+    "text": "File formats, preprocessing steps, label order, and model version all had to be preserved outside the training environment."
+   }
+  ],
+  "github": "https://github.com/divyabomaraboina",
+  "live": "",
+  "theme": {
+   "bg1": "#fff4f8",
+   "bg2": "#efcddd",
+   "accent": "#b14c7b",
+   "accent2": "#6e79ae",
+   "ink": "#432337"
+  },
+  "slug": "fashion-mnist-api",
+  "logo": ""
+ },
+ {
+  "category": "Personal & Academic Project",
+  "title": "Amazon Review Sentiment Analyzer",
+  "subtitle": "Converting thousands of product reviews into clear quality signals",
+  "problem": "More than 17,000 customer reviews contained repeated product complaints, but manual reading could not reliably identify the categories and themes driving negative sentiment.",
+  "approach": "I cleaned and tokenized the review text, trained a BERT-based classifier, and connected sentiment predictions to product-level interpretation.",
+  "built": "A TensorFlow BERT pipeline, preprocessing and evaluation workflow, subcategory analysis, and a Gradio interface for interactive review classification.",
+  "value": "The system reached 91% classification accuracy and surfaced durability complaints across two product subcategories as a concrete quality-improvement signal.",
+  "stack": [
+   "Python",
+   "BERT",
+   "TensorFlow",
+   "Scikit-learn",
+   "Gradio",
+   "NLP"
+  ],
+  "twists": [
+   {
+    "title": "A sentiment score was not the final insight",
+    "text": "The useful question was which product areas repeatedly generated negative experiences."
+   },
+   {
+    "title": "Class performance mattered more than one headline metric",
+    "text": "I reviewed where the classifier confused neutral and negative language instead of relying only on overall accuracy."
+   },
+   {
+    "title": "The interface changed the project",
+    "text": "Gradio turned the model from a notebook result into something a non-technical user could test directly."
+   }
+  ],
+  "github": "https://github.com/divyabomaraboina",
+  "live": "",
+  "theme": {
+   "bg1": "#fff8e8",
+   "bg2": "#edd7a9",
+   "accent": "#d18416",
+   "accent2": "#4d7895",
+   "ink": "#3d2d16"
+  },
+  "slug": "amazon-review-sentiment",
+  "logo": ""
+ }
+]

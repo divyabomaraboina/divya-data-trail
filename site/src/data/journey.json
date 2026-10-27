@@ -1,0 +1,82 @@
+[
+ {
+  "title": "Hyderabad",
+  "sub": "Electronics & VLSI",
+  "mission": "Follow what feels interesting",
+  "reward": "Systems Thinking",
+  "thought": "This feels exciting. Maybe VLSI is the thing I will do forever.",
+  "story": "I started with Electronics and VLSI because I genuinely liked understanding what was happening under the surface. Then COVID slowed everything down, and I started exploring coding just for fun. I was a complete beginner, but making something work on my own felt exciting."
+ },
+ {
+  "title": "COVID Sandbox",
+  "sub": "Coding begins",
+  "mission": "Explore without overthinking",
+  "reward": "Curiosity",
+  "thought": "Wait... coding is actually fun. Is this just a phase? Let me keep going.",
+  "story": "I did not have a perfect plan. I watched YouTube, searched Google, took Coursera courses, and tried whatever looked interesting. I was simply learning what kind of work kept me curious."
+ },
+ {
+  "title": "Mysuru",
+  "sub": "Infosys training · relocated",
+  "mission": "Turn curiosity into discipline",
+  "reward": "Discipline",
+  "thought": "Maybe this is what I want to do forever... let me see how far I can take it.",
+  "story": "Mysuru was my first time living away from home. I was nervous, excited, and honestly ready to learn everything. Infosys training gave structure to my curiosity through Java, Selenium, SQL, testing, and the complete software process."
+ },
+ {
+  "title": "Chennai",
+  "sub": "Infosys · QA Analyst · relocated",
+  "mission": "Understand why systems fail",
+  "reward": "Quality Mindset",
+  "thought": "Okay, maybe this is the real career path. Or maybe I am still figuring it out.",
+  "story": "In Chennai, the work became real. I was validating banking systems, tracking defects, checking ETL transformations, and understanding why something failed instead of only marking it as failed. Being promoted to Test Engineer showed me how much I enjoyed investigation."
+ },
+ {
+  "title": "The Leap",
+  "sub": "India → Boston",
+  "mission": "Choose growth over comfort",
+  "reward": "Adaptability",
+  "thought": "Will I really pull this off? I guess there is only one way to find out.",
+  "story": "I knew in my gut that I wanted work that kept changing and challenging me. Data felt right because every problem looked different. Moving abroad as a first-generation student was a huge step, but my excitement to learn was stronger than the fear."
+ },
+ {
+  "title": "Northeastern",
+  "sub": "Analytics + ML",
+  "mission": "Connect tools to decisions",
+  "reward": "Machine Intelligence",
+  "thought": "This finally feels like all the pieces are connecting. Maybe this is it.",
+  "story": "Northeastern changed how I looked at analytics. SQL, machine learning, dashboards, forecasting, and AI stopped feeling like separate subjects. They became one process: understand the question, validate the data, build the solution, and explain what it means."
+ },
+ {
+  "title": "Nexodus Inc.",
+  "sub": "Internship · Automation + BI",
+  "mission": "Save people real time",
+  "reward": "Business Analytics",
+  "thought": "This is the first time my work clearly saved people time. I want more of this.",
+  "story": "At Nexodus, I saw how much time people were losing to repetitive reporting. I automated collection, worked on Power BI dashboards, and helped retain historical data. Cutting reporting time by 70% taught me that useful analytics should make someone’s day easier."
+ },
+ {
+  "title": "Nexodus Inc.",
+  "sub": "Co-op · Data Quality + NLP",
+  "mission": "Earn trust before modeling",
+  "reward": "AI Communication",
+  "thought": "So AI is not just about models. Trust comes first. That changed everything.",
+  "story": "In my co-op, I worked with messy source data and unstructured social content. I caught recurring issues before reporting and built a BERT pipeline. The biggest lesson was simple: people trust the result only when the data behind it is clean and explainable."
+ },
+ {
+  "title": "Graduation",
+  "sub": "MPS Analytics",
+  "mission": "Look back at the distance",
+  "reward": "Graduate",
+  "thought": "Maybe this is the end of one trail... but definitely not the end of the journey.",
+  "story": "Graduating with a 3.9 GPA still feels surreal. I moved from electronics to coding, testing, analytics, an internship, a co-op, and finally a master’s in Analytics with a Machine Intelligence concentration."
+ },
+ {
+  "title": "Living Stones",
+  "sub": "Geospatial Analyst · now",
+  "mission": "Build things people can trust",
+  "reward": "Impact Builder",
+  "thought": "I still do not know exactly how far this trail goes. That is the fun part.",
+  "story": "Now I am a Geospatial Analyst at Living Stones Foundation, ranking water risk for all 184 municipalities in Ceará, Brazil. I am working where analytics, engineering, and AI meet. I do not want to build models only because I can. I want to build systems that help people understand what is happening, why it matters, and what to do next."
+ }
+]
