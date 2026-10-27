@@ -23,6 +23,8 @@ export default function SmoothScroll() {
   const lenisRef = useRef<Lenis | null>(null);
 
   useEffect(() => {
+    // the page's JavaScript is running: turn off the CSS reveal safety net
+    document.documentElement.classList.add("js-ready");
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     let lenis: Lenis | null = null;
     let id = 0;

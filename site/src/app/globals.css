@@ -2647,3 +2647,44 @@ html {
     font-size: 2rem;
   }
 }
+
+/* v13: CSS-only intro animation (no JavaScript needed to show the headline) */
+@keyframes hero-up {
+  from { transform: translateY(110%); }
+  to { transform: translateY(0); }
+}
+@keyframes hero-rise {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes hero-pop {
+  0% { transform: scale(0) rotate(-25deg); }
+  70% { transform: scale(1.08) rotate(3deg); }
+  100% { transform: scale(1) rotate(0); }
+}
+.hero-up {
+  animation: hero-up 1s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: var(--d, 0s);
+}
+.hero-rise {
+  animation: hero-rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: var(--d, 0s);
+}
+.hero-pop {
+  animation: hero-pop 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.45s both;
+}
+
+/* safety net: if the page's JavaScript never starts (old Safari, blocked script, slow phone),
+   reveal anything the animation library left hidden after 2.5s */
+@keyframes reveal-fallback {
+  to { opacity: 1; transform: none; clip-path: none; }
+}
+html:not(.js-ready) main [style*="opacity:0"],
+html:not(.js-ready) main [style*="opacity: 0"],
+html:not(.js-ready) main [style*="translateY(110%)"],
+html:not(.js-ready) main [style*="translateY(36px)"],
+html:not(.js-ready) main [style*="translateY(40px)"],
+html:not(.js-ready) main [style*="translateY(24px)"],
+html:not(.js-ready) main [style*="translateY(20px)"] {
+  animation: reveal-fallback 0.6s ease 2.5s forwards;
+}
